@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import CartItem from "../../components/shop/CartItem";
 import colors from "../../constants/colors";
 import { removeFromCart } from "../../store/actions/cart";
+import { addOrder } from "../../store/actions/order";
 
 const CartScreen = () => {
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
@@ -37,7 +38,7 @@ const CartScreen = () => {
         </Text>
         <Button
           title="Order Now"
-          onPress={() => {}}
+          onPress={() => dispatch(addOrder(cartItems, cartTotalAmount))}
           color={colors.accent}
           disabled={cartItems.length === 0}
         />
