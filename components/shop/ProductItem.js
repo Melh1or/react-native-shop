@@ -78,19 +78,21 @@ const styles = StyleSheet.create({
   },
   details: {
     alignItems: "center",
-    height: "15%",
+    height: "18%",
     padding: 10,
   },
   title: {
     fontSize: 18,
-    marginVertical: 4,
+    marginVertical: 2,
+    fontFamily: "bold",
   },
   price: {
     fontSize: 14,
     color: "#888",
+    fontFamily: "regular",
   },
   actions: {
-    height: "25%",
+    height: "22%",
     paddingHorizontal: 20,
     flexDirection: "row",
     justifyContent: "space-between",
