@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -26,6 +26,14 @@ const EditProductScreen = (props) => {
   const [description, setDescription] = useState(
     editedProduct ? editedProduct.description : ""
   );
+
+  const submitHandler = useCallback(() => {
+    console.log("submit");
+  }, []);
+
+  useEffect(() => {
+    props.navigation.setParams({ submit: submitHandler });
+  }, [submitHandler]);
 
   return (
     <ScrollView>
@@ -70,6 +78,8 @@ const EditProductScreen = (props) => {
 };
 
 EditProductScreen.navigationOptions = ({ navigation }) => {
+  const submit = navigation.getParam("submit");
+
   return {
     title: navigation.getParam("productId") ? "Edit Product" : "Add Product",
     headerRight: () => (
@@ -79,7 +89,7 @@ EditProductScreen.navigationOptions = ({ navigation }) => {
           iconName={
             Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"
           }
-          onPress={() => navigation.navigate("EditProduct")}
+          onPress={submit}
         />
       </HeaderButtons>
     ),
