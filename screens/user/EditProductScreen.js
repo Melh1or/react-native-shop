@@ -34,8 +34,9 @@ const EditProductScreen = (props) => {
     if (editedProduct) {
       dispatch(updateProduct(prodId, title, description, imageUrl));
     } else {
-      dispatch(createProduct(title, description, imageUrl, +price))
+      dispatch(createProduct(title, description, imageUrl, +price));
     }
+    props.navigation.goBack();
   }, [dispatch, prodId, price, title, description, imageUrl]);
 
   useEffect(() => {
