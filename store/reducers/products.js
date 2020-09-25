@@ -25,7 +25,7 @@ export default (state = initialState, { type, payload }) => {
       };
     case CREATE_PRODUCT:
       const newProduct = new Product(
-        new Date().toString(),
+        payload.id,
         "u1",
         payload.title,
         payload.imageUrl,
