@@ -4,6 +4,7 @@ import {
   DELETE_PRODUCT,
   CREATE_PRODUCT,
   UPDATE_PRODUCT,
+  SET_PRODUCTS,
 } from "../actions/products";
 
 const initialState = {
@@ -13,6 +14,12 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case SET_PRODUCTS:
+      return {
+        ...state,
+        availableProducts: payload,
+        userProducts: payload.filter((p) => p.ownerId === "u1"),
+      };
     case DELETE_PRODUCT:
       return {
         ...state,
