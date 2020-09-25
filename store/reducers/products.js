@@ -16,9 +16,8 @@ export default (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_PRODUCTS:
       return {
-        ...state,
         availableProducts: payload,
-        userProducts: payload.filter((p) => p.ownerId === "u1"),
+        userProducts: payload.filter((prod) => prod.ownerId === "u1"),
       };
     case DELETE_PRODUCT:
       return {
