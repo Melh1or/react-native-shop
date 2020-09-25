@@ -25,7 +25,8 @@
     "react-navigation-header-buttons": "^5.0.2",
     "react-navigation-stack": "^2.8.2",
     "react-redux": "^7.2.1",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
