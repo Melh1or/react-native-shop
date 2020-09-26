@@ -9,10 +9,10 @@ export default (state = initialState, { type, payload }) => {
   switch (type) {
     case ADD_ORDER:
       const newOrder = new Order(
-        new Date().toString(),
+        payload.id,
         payload.items,
         payload.amount,
-        new Date()
+        payload.date
       );
       return {
         ...state,
