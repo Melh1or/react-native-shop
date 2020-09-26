@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback } from "react";
+import React, { useReducer, useCallback, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import Input from "../../components/UI/Input";
 import Card from "../../components/UI/Card";
 import colors from "../../constants/colors";
-import { signup } from "../../store/actions/auth";
+import { signup, login } from "../../store/actions/auth";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -40,6 +40,7 @@ const formReducer = (state, action) => {
 };
 
 const AuthScreen = () => {
+  const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -66,10 +67,20 @@ const AuthScreen = () => {
     [dispatchFormState]
   );
 
-  const signupHandler = () => {
-    dispatch(
-      signup(formState.inputValues.email, formState.inputValues.password)
-    );
+  const authHandler = () => {
+    let action;
+    if (isSignup) {
+      action = signup(
+        formState.inputValues.email,
+        formState.inputValues.password
+      );
+    } else {
+      action = login(
+        formState.inputValues.email,
+        formState.inputValues.password
+      );
+    }
+    dispatch(action);
   };
 
   return (
@@ -107,16 +118,16 @@ const AuthScreen = () => {
           </ScrollView>
           <View style={styles.buttonContainer}>
             <Button
-              title="Login"
+              title={isSignup ? "Sign Up" : "Login"}
               color={colors.primary}
-              onPress={signupHandler}
+              onPress={authHandler}
             />
           </View>
           <View style={styles.buttonContainer}>
             <Button
-              title="Switch to Sing Up"
+              title={`Switch to ${isSignup ? "Login" : "Sign Up"}`}
               color={colors.accent}
-              onPress={() => {}}
+              onPress={() => setIsSignup((prev) => !prev)}
             />
           </View>
         </Card>
