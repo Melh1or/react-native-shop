@@ -43,7 +43,16 @@ const ProductsOverviewScreen = (props) => {
 
   useEffect(() => {
     loadProducts();
-  }, [dispatch]);
+  }, [loadProducts]);
+
+  useEffect(() => {
+    const willFocusSub = props.navigation.addListener(
+      "willFocus",
+      loadProducts
+    );
+
+    return () => willFocusSub.remove();
+  }, [loadProducts]);
 
   if (error) {
     return (
