@@ -38,11 +38,16 @@ export const fetchProducts = () => async (dispatch) => {
 };
 
 export const deleteProduct = (productId) => async (dispatch) => {
+  await fetch(
+    `https://rn-shop-e80c6.firebaseio.com/products/${productId}.json`,
+    {
+      method: "DELETE",
+    }
+  );
+
   dispatch({
     type: DELETE_PRODUCT,
-    payload: {
-      productId,
-    },
+    payload: { productId },
   });
 };
 
