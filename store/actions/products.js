@@ -65,9 +65,21 @@ export const createProduct = (title, description, imageUrl, price) => async (
   });
 };
 
-export const updateProduct = (id, title, description, imageUrl) => {
-  return {
-    type: UPDATE_PRODUCT,
-    payload: { id, title, description, imageUrl },
-  };
+export const updateProduct = (id, title, description, imageUrl) => async (
+  dispatch
+) => {
+  try {
+    await fetch(`https://rn-shop-e80c6.firebaseio.com/products/${id}.json`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, description, imageUrl }),
+    });
+
+    dispatch({
+      type: UPDATE_PRODUCT,
+      payload: { id, title, description, imageUrl },
+    });
+  } catch (e) {
+    console.log(e);
+  }
 };
