@@ -8,10 +8,11 @@ export const addOrder = (cartItems, totalAmount) => async (
   getState
 ) => {
   const token = getState().auth.token;
+  const userId = getState().auth.userId;
   const date = new Date();
 
   const res = await fetch(
-    `https://rn-shop-e80c6.firebaseio.com/orders/u1.json?auth=${token}`,
+    `https://rn-shop-e80c6.firebaseio.com/orders/${userId}.json?auth=${token}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,10 +41,12 @@ export const addOrder = (cartItems, totalAmount) => async (
   });
 };
 
-export const fetchOrders = () => async (dispatch) => {
+export const fetchOrders = () => async (dispatch, getState) => {
+  const userId = getState().auth.userId;
+
   try {
     const response = await fetch(
-      "https://rn-shop-e80c6.firebaseio.com/orders/u1.json"
+      `https://rn-shop-e80c6.firebaseio.com/orders/${userId}.json`
     );
 
     if (!response.ok) {

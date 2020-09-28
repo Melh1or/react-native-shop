@@ -5,6 +5,7 @@ import {
   Platform,
   View,
   StyleSheet,
+  Text,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,6 +17,7 @@ import colors from "../../constants/colors";
 
 const OrdersScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
+
   const orders = useSelector((state) => state.order.orders);
   const dispatch = useDispatch();
 
@@ -30,6 +32,14 @@ const OrdersScreen = () => {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size="large" color={colors.primary} />
+      </View>
+    );
+  }
+
+  if (orders.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <Text>No orders found maybe start ordering some products?</Text>
       </View>
     );
   }

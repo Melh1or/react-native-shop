@@ -8,16 +8,16 @@ import {
 } from "../actions/products";
 
 const initialState = {
-  availableProducts: PRODUCTS,
-  userProducts: PRODUCTS.filter((prod) => prod.ownerId === "u1"),
+  availableProducts: [],
+  userProducts: [],
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_PRODUCTS:
       return {
-        availableProducts: payload,
-        userProducts: payload.filter((prod) => prod.ownerId === "u1"),
+        availableProducts: payload.products,
+        userProducts: payload.userProducts,
       };
     case DELETE_PRODUCT:
       return {
@@ -32,7 +32,7 @@ export default (state = initialState, { type, payload }) => {
     case CREATE_PRODUCT:
       const newProduct = new Product(
         payload.id,
-        "u1",
+        payload.ownerId,
         payload.title,
         payload.imageUrl,
         payload.description,
