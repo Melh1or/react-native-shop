@@ -35,7 +35,7 @@ const ProductsOverviewScreen = (props) => {
     setError(null);
     setIsRefreshing(true)
     try {
-      await dispatch(fetchProducts()).then();
+      await dispatch(fetchProducts());
     } catch (err) {
       setError(err.message);
     }
@@ -47,7 +47,7 @@ const ProductsOverviewScreen = (props) => {
     loadProducts().then(() => {
       setIsLoading(false)
     });
-  }, [loadProducts]);
+  }, [loadProducts, dispatch]);
 
   useEffect(() => {
     const willFocusSub = props.navigation.addListener(

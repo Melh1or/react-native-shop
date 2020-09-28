@@ -37,16 +37,17 @@ export const fetchProducts = () => async (dispatch) => {
   }
 };
 
-export const deleteProduct = (productId) => async (dispatch) => {
+export const deleteProduct = (productId) => async (dispatch, getState) => {
+  const token = getState().auth.token;
   const res = await fetch(
-    `https://rn-shop-e80c6.firebaseio.com/products/${productId}.json`,
+    `https://rn-shop-e80c6.firebaseio.com/products/${productId}.json?auth=${token}`,
     {
       method: "DELETE",
     }
   );
 
   if (!res.ok) {
-    throw new Error('Something went wrong')
+    throw new Error("Something went wrong");
   }
 
   dispatch({
@@ -56,10 +57,12 @@ export const deleteProduct = (productId) => async (dispatch) => {
 };
 
 export const createProduct = (title, description, imageUrl, price) => async (
-  dispatch
+  dispatch,
+  getState
 ) => {
+  const token = getState().auth.token;
   const response = await fetch(
-    "https://rn-shop-e80c6.firebaseio.com/products.json",
+    `https://rn-shop-e80c6.firebaseio.com/products.json?auth=${token}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -75,17 +78,22 @@ export const createProduct = (title, description, imageUrl, price) => async (
 };
 
 export const updateProduct = (id, title, description, imageUrl) => async (
-  dispatch
+  dispatch,
+  getState
 ) => {
+  const token = getState().auth.token;
   try {
-    const res = await fetch(`https://rn-shop-e80c6.firebaseio.com/products/${id}.json`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, description, imageUrl }),
-    });
+    const res = await fetch(
+      `https://rn-shop-e80c6.firebaseio.com/products/${id}.json?auth=${token}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, description, imageUrl }),
+      }
+    );
 
     if (!res.ok) {
-      throw new Error('Something went wrong')
+      throw new Error("Something went wrong");
     }
 
     dispatch({

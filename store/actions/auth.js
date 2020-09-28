@@ -34,6 +34,10 @@ export const signup = (email, password) => async (dispatch) => {
 
   dispatch({
     type: SIGNUP,
+    payload: {
+      token: resData.idToken,
+      userId: resData.localId,
+    },
   });
 };
 
@@ -72,5 +76,9 @@ export const login = (email, password) => async (dispatch) => {
 
   dispatch({
     type: LOGIN,
+    payload: {
+      token: resData.idToken,
+      userId: resData.localId,
+    },
   });
 };

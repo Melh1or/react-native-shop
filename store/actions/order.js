@@ -3,11 +3,15 @@ import Order from "../../models/Order";
 export const ADD_ORDER = "ADD_ORDER";
 export const SET_ORDERS = "SET_ORDERS";
 
-export const addOrder = (cartItems, totalAmount) => async (dispatch) => {
+export const addOrder = (cartItems, totalAmount) => async (
+  dispatch,
+  getState
+) => {
+  const token = getState().auth.token;
   const date = new Date();
 
   const res = await fetch(
-    `https://rn-shop-e80c6.firebaseio.com/orders/u1.json`,
+    `https://rn-shop-e80c6.firebaseio.com/orders/u1.json?auth=${token}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
