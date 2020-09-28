@@ -1,11 +1,12 @@
-import React, { useReducer, useCallback, useState } from "react";
+import React, { useReducer, useCallback, useState, useEffect } from "react";
 import {
   StyleSheet,
-  Text,
   View,
   ScrollView,
   KeyboardAvoidingView,
   Button,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch } from "react-redux";
@@ -40,6 +41,8 @@ const formReducer = (state, action) => {
 };
 
 const AuthScreen = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
 
@@ -67,7 +70,7 @@ const AuthScreen = () => {
     [dispatchFormState]
   );
 
-  const authHandler = () => {
+  const authHandler = async () => {
     let action;
     if (isSignup) {
       action = signup(
@@ -80,8 +83,23 @@ const AuthScreen = () => {
         formState.inputValues.password
       );
     }
-    dispatch(action);
+    setError(null);
+    setIsLoading(true);
+    try {
+      await dispatch(action);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setError(err.message);
+      setIsLoading(false);
+    }
   };
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
+    }
+  }, [error]);
 
   return (
     <KeyboardAvoidingView
@@ -117,11 +135,15 @@ const AuthScreen = () => {
             />
           </ScrollView>
           <View style={styles.buttonContainer}>
-            <Button
-              title={isSignup ? "Sign Up" : "Login"}
-              color={colors.primary}
-              onPress={authHandler}
-            />
+            {isLoading ? (
+              <ActivityIndicator size="small" color={colors.primary} />
+            ) : (
+              <Button
+                title={isSignup ? "Sign Up" : "Login"}
+                color={colors.primary}
+                onPress={authHandler}
+              />
+            )}
           </View>
           <View style={styles.buttonContainer}>
             <Button
