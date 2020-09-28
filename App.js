@@ -5,7 +5,7 @@ import { AppLoading } from "expo";
 import * as Font from "expo-font";
 import thunk from "redux-thunk";
 
-import ShopNavigator from "./navigation/ShopNavigator";
+import NavigationContainer from "./navigation/NavigationContainer";
 
 import productsReducer from "./store/reducers/products";
 import cartReducer from "./store/reducers/cart";
@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
   products: productsReducer,
   cart: cartReducer,
   order: orderReducer,
-  auth: authReducer
+  auth: authReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
@@ -42,7 +42,7 @@ export default function App() {
   }
   return (
     <Provider store={store}>
-      <ShopNavigator />
+      <NavigationContainer />
     </Provider>
   );
 }
