@@ -2,8 +2,15 @@ import { AsyncStorage } from "react-native";
 
 export const AUTHENTICATE = "AUTHENTICATE";
 export const LOGOUT = "LOGOUT";
+export const SET_DID_TRY_AL = "SET_DID_TRY_AL";
 
 let timer;
+
+export const setDidTryAL = () => {
+  return {
+    type: SET_DID_TRY_AL
+  }
+}
 
 export const authenticate = (userId, token, expiryTime) => (dispatch) => {
   dispatch(setLogoutTimer(expiryTime));
@@ -97,9 +104,7 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   clearLogoutTimer();
   AsyncStorage.removeItem("userData");
-  dispatch({
-    type: LOGOUT,
-  });
+  dispatch({ type: LOGOUT });
 };
 
 const clearLogoutTimer = () => {

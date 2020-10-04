@@ -13,7 +13,7 @@ import { addToCart } from "../../store/actions/cart";
 import colors from "../../constants/colors";
 
 const ProductDetailScreen = (props) => {
-  const productId = props.navigation.getParam("productId");
+  const productId = props.route.params.productId;
   const selectedProduct = useSelector((state) =>
     state.products.availableProducts.find((prod) => prod.id === productId)
   );
@@ -35,11 +35,10 @@ const ProductDetailScreen = (props) => {
   );
 };
 
-ProductDetailScreen.navigationOptions = (navData) => {
-  const productTitle = navData.navigation.getParam("productTitle");
-
+// ProductDetailScreen.navigationOptions = (navData) => {
+export const screenOptions = (navData) => {
   return {
-    title: productTitle,
+    title: navData.route.params.productTitle,
   };
 };
 

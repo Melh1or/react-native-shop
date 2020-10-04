@@ -59,7 +59,8 @@ const OrdersScreen = () => {
   );
 };
 
-OrdersScreen.navigationOptions = ({ navigation }) => ({
+// OrdersScreen.navigationOptions = ({ navigation }) => ({
+export const screenOptions = ({ navigation }) => ({
   title: "Your orders",
   headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>

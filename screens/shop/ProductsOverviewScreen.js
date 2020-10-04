@@ -33,29 +33,26 @@ const ProductsOverviewScreen = (props) => {
 
   const loadProducts = useCallback(async () => {
     setError(null);
-    setIsRefreshing(true)
+    setIsRefreshing(true);
     try {
       await dispatch(fetchProducts());
     } catch (err) {
       setError(err.message);
     }
-    setIsRefreshing(false)
+    setIsRefreshing(false);
   }, [dispatch, setIsLoading, setError]);
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     loadProducts().then(() => {
-      setIsLoading(false)
+      setIsLoading(false);
     });
   }, [loadProducts, dispatch]);
 
   useEffect(() => {
-    const willFocusSub = props.navigation.addListener(
-      "willFocus",
-      loadProducts
-    );
+    const unsubscribe = props.navigation.addListener("willFocus", loadProducts);
 
-    return () => willFocusSub.remove();
+    return () => unsubscribe();
   }, [loadProducts]);
 
   if (error) {
@@ -108,7 +105,8 @@ const ProductsOverviewScreen = (props) => {
   );
 };
 
-ProductsOverviewScreen.navigationOptions = ({ navigation }) => {
+// ProductsOverviewScreen.navigationOptions = ({ navigation }) => {
+export const screenOptions = ({ navigation }) => {
   return {
     headerTitle: "All products",
     headerLeft: () => (

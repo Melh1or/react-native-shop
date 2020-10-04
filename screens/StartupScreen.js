@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 
-import { authenticate } from "../store/actions/auth";
+import { authenticate, setDidTryAL } from "../store/actions/auth";
 import colors from "../constants/colors";
 
 const StartupScreen = (props) => {
@@ -17,7 +17,8 @@ const StartupScreen = (props) => {
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem("userData");
       if (!userData) {
-        props.navigation.navigate("Auth");
+        // props.navigation.navigate("Auth");
+        dispatch(setDidTryAL());
         return;
       }
 
@@ -25,13 +26,15 @@ const StartupScreen = (props) => {
       const expirationDate = new Date(expiryDate);
 
       if (expirationDate <= new Date() || !token || !userId) {
-        props.navigation.navigate("Auth");
+        // props.navigation.navigate("Auth");
+        dispatch(setDidTryAL());
         return;
       }
 
       const expirationTime = expirationDate.getTime() - new Date().getTime();
 
-      props.navigation.navigate("Shop");
+      // props.navigation.navigate("Shop");
+      dispatch(setDidTryAL());
       dispatch(authenticate(userId, token, expirationTime));
     };
 

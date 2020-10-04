@@ -70,7 +70,8 @@ const UserProductsScreen = ({ navigation }) => {
   );
 };
 
-UserProductsScreen.navigationOptions = ({ navigation }) => ({
+// UserProductsScreen.navigationOptions = ({ navigation }) => ({
+export const screenOptions = ({ navigation }) => ({
   title: "Your Products",
   headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
